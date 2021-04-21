@@ -3,16 +3,39 @@
     <head>
         <title>Web Hotels</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    </head>
+        <link rel="stylesheet" href="style.css" type="text/css" />    </head>
     <body>
-        <header>
-            Web Hotels
-        </header>
-        <!-- Color: Pink (light)-->
+        <section class="header">
+            <header>
+                Web Hotels
+                <a style="float: right;"><button>Εγγραφή</button></a>
+                <a style="float: right;"><button>Σύνδεση</button></a>
+            </header>
+        </section>
+        <section class="finder">
+            <form>
+                <label for="hotel-name">Προορισμός:</label>
+                <input type="text" name="hotel-name" />
+                <label for="persons">Άτομα:</label>
+                <input type="text" name="persons" />
+                <label for="date">Ημερομηνία:</label>
+                <input type="date" />
+                <button>Αναζήτηση</button>
+            </form>
+        </section>
+        <!-- Color: Carrot with white and black-->
         <!-- add images at the index page from towns Athens, Thessaloniki, Patra, Larissa, Ioannina-->
-        <section>
-            Index page 
+        <section class="text">
+            Βρες το κατάλληλο ξενοδοχείο για σένα και την οικογένεια σου εύκολα και γρήγορα!
+        </section>
+        <section class="town-pictures">
+            <ul>
+                    
+                <li><img src="./media/Athens.jpg" tag="Athens" /></li>
+                <li><img src="./media/Thessaloniki.jpg" tag="Thessaloniki"/></li>
+                <li><img src="./media/Patra.jpg" tag="Patra"/></li>
+                <li><img src="./media/Larissa.jpg" tag="Larissa"/></li>
+            </ul>
         </section>
         <footer>
             &copy; Webhotels

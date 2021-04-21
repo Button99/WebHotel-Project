@@ -1,1 +1,30 @@
-/* Style
+/* Style */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* font-family: ''''...''''; */
+}
+
+html, body {
+    height: 100%;
+}
+
+/* header {
+    font-size: 2.5rem;
+    text-align: left;
+    background-color: #d48166;
+}
+*/
+
+.header {
+    font-size: 2rem;
+    text-align: left;
+    background-color: #d48166;
+}
+
+.text {
+    padding: 2rem;
+    text-align: center;
+}
