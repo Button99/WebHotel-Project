@@ -68,17 +68,19 @@ footer p {
 }
 
 .town-pictures {
-    margin: 2rem;
-    display: inline-block;
-
-}
-
-.town-pictures li {
-    list-style-type: none;
     display: inline;
 }
 
-.town-pictures img{
-    width: 20%;
-    height: 20%;
+
+.card {
+    width: 50%;
+    display: inline-block;
 }
+
+
+.card img {
+    width: 35%;
+    height: 35%;
+}
+
+/* fix the img size and put them inline */
