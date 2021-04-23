@@ -49,10 +49,11 @@ html, body {
 
 footer {
     width: 100%;
-    position: fixed;
+    position: relative;
     left: 0;
     bottom: 0;
     padding: 1rem;
+    margin-bottom: 00%;
     color: black;
     text-align: center;
     background-color: #373A36;
@@ -68,19 +69,35 @@ footer p {
 }
 
 .town-pictures {
-    display: inline;
+    margin: 5rem;
+    width: 90%;
 }
 
-
-.card {
-    width: 50%;
+.town-cards li{
     display: inline-block;
+    width: 40%;    
+    height: 80vh;
+    margin: 3rem;
 }
 
 
-.card img {
-    width: 35%;
-    height: 35%;
+.town-cards img {
+    width: 70%;
+    height: 50vh;
 }
+
+.town-cards {
+    padding-right: 2rem;
+}
+
+.town-cards li a {
+    transition: .5s ease;
+}
+.town-cards li a:hover {
+    opacity: 1;
+    background-color: #373A36;
+    
+}
+
 
 /* fix the img size and put them inline */
