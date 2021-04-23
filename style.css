@@ -9,8 +9,9 @@
 
 html, body {
     font-size: 100%;
-    height: 100vh;
+    min-height: 100%;
     box-sizing: border-box;
+    margin-bottom: 0%;
 }
 
 
@@ -20,9 +21,10 @@ html, body {
     background-color: #d48166;
 }
 
-.header a {
+.btn {
     float: right;
     align-content: middle;
+    text-decoration-line: none;
 }
 
 .header button{
@@ -49,14 +51,15 @@ html, body {
 
 footer {
     width: 100%;
-    position: relative;
     left: 0;
+    position: fixed;
     bottom: 0;
     padding: 1rem;
     margin-bottom: 00%;
     color: black;
     text-align: center;
     background-color: #373A36;
+    margin-bottom: 0%;
 }
 
 footer p {
@@ -96,8 +99,14 @@ footer p {
 .town-cards li a:hover {
     opacity: 1;
     background-color: #373A36;
-    
+
 }
 
+/************* Log in page *************/
 
-/* fix the img size and put them inline */
+.logIn-form {
+    margin: 3rem;
+    padding-left: 35%;
+    padding-top: 8%;
+    margin-bottom: 9%;
+}
