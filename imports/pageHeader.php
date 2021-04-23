@@ -3,13 +3,13 @@
     <head>
         <title>Web Hotels</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style.css" type="text/css" />    </head>
+        <link rel="stylesheet" href="../style.css" type="text/css" />    </head>
     <body>
         <section class="header">
             <header>
-                Web Hotels
-                <a><button>Εγγραφή</button></a>
-                <a><button>Σύνδεση</button></a>
+                <a href="index.php" style="text-decoration-line: none; color: black;">Web Hotels</a>
+                <a class="btn"><button>Εγγραφή</button></a>
+                <a class="btn" href="../screens/logIn.php"><button>Σύνδεση</button></a>
             </header>
         </section>
         <section class="finder">
