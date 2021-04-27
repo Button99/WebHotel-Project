@@ -10,12 +10,15 @@
         exit();
     }
 
-    if(!preg_match("/^[a-zA-Z-' ]*$/", $usr)) {
+    if(!preg_match("^[A-Za-z]\\w{5, 29}$", $usr)) {
         echo "Πρόβλημα με τα στοιχεία σου!";
         exit();
     }
 
 
     // if connection with the server is established then access to the sql query...
+
+  #  $sql= "SELECT * FROM User WHERE `username`=$usr AND `password`=$psw";
+  #  $stmt= conn->exec($sql);
 }
 ?>

@@ -110,3 +110,12 @@ footer p {
     padding-top: 8%;
     margin-bottom: 9%;
 }
+
+/********* Sign up Page *************/
+
+.signUp-form {
+    margin: 3rem;
+    padding-left: 35%;
+    padding-top: 8%;
+    margin-bottom: 9%;
+}

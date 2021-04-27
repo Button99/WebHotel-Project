@@ -11,8 +11,7 @@
     }
     
     catch (PDOException $p) {
-        echo "Connection error";
-        echo "Error message" . $p->getMessage(); 
+        echo "Πρόβλημα με τον server"; 
     }
     
 ?>
