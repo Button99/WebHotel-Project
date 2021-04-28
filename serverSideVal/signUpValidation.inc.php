@@ -28,7 +28,7 @@
 
         try {
             $hashedPsw= openssl_digest($psw, "sha512");
-            $sql= "INSERT INTO `User` (`username`, `password`, `email`) VALUES
+            $sql= "INSERT INTO `Users` (`username`, `password`, `email`) VALUES
                 ('$usr', '$hashedPsw', '$email');";
 
             $conn ->exec($sql);
