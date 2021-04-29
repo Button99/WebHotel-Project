@@ -30,12 +30,10 @@
         $data= $stmt->fetch(PDO::FETCH_OBJ);
 
         if($count) {
-            echo "connected!!!!!";
-            $_SESSION["userId"]= $data->userid;
-            return true; 
+            $_SESSION["userId"]= $data->userID;
+            header("Location: ../screens/index.php");
         }
         else {
-            echo "$count";
             return false;
         }
     } catch(PDOException $e) {

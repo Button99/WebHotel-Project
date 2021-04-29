@@ -9,8 +9,22 @@
         <section class="header">
             <header>
                 <a href="index.php" style="text-decoration-line: none; color: black;">Web Hotels</a>
-                <a class="btn" href="../screens/signUp.php"><button>Εγγραφή</button></a>
-                <a class="btn" href="../screens/logIn.php"><button>Σύνδεση</button></a>
+                <?php
+                    session_start();
+                    if(empty($_SESSION["userId"])) {
+                        echo '<a class="btn" href="../screens/logIn.php" name="login-btn"><button>Σύνδεση</button></a>';
+                        echo '<a class="btn" href="../screens/signUp.php"><button>Εγγραφή</button></a>';
+
+                    }
+                    else {
+                        echo '<a class="btn" href="../screens/logout.php" name="login-btn"><button>Αποσύνδεση</button></a>';
+                        echo '<a class="btn" href="../screens/addHotel.php"><button>Προσθήκη Ξενοδοχείου</button></a>';
+
+                    }
+
+                    
+                ?>
+
             </header>
         </section>
         <section class="finder">
