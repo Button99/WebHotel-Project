@@ -119,3 +119,10 @@ footer p {
     padding-top: 8%;
     margin-bottom: 9%;
 }
+
+/********* Add hotel page ***************/
+
+.add-hotel {
+    margin: 5rem;
+    padding: 1rem;
+}
