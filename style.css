@@ -123,6 +123,8 @@ footer p {
 /********* Add hotel page ***************/
 
 .add-hotel {
-    margin: 5rem;
+    margin: 2rem;
     padding: 1rem;
+    border: 1px solid #373A36;
+    text-align: center;
 }
