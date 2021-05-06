@@ -2,8 +2,10 @@
     include("../imports/pageHeader.php");
 ?>
 
+<script src="../clientSideVal/addHotelValidation.js"></script>
+
 <section>
-    <form class="add-hotel">
+    <form class="add-hotel" method="post" onsubmit="return validateForm()">
         <label for="hotel-name">Όνομα ξενοδοχείου:</label><br>
         <input type="text" name="hotel-name" id="hotel-name"/><br><br>
         <?php
@@ -27,11 +29,11 @@
         <label for="longtitude">Γεωγραφικό μήκος:</label><br>
         <input type="text" name="longitude"id="longitude"/><br><br>
         <label for="latitude">Γεωγραφικό πλάτος:</label><br>
-        <input type="text" name="latitude"/><br><br>
+        <input type="text" name="latitude" id="latitude"/><br><br>
         <label for="stars">Αστέρια:</label><br>
         <?php 
             echo '<select name="stars" id="stars" >';
-            for($index=0; $index<=5; $index++) {
+            for($index=1; $index<=5; $index++) {
                 echo "<option value=". $index . ">".$index . "</option>";
             }
             echo "</select>";
