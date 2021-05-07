@@ -5,7 +5,7 @@
 <script src="../clientSideVal/addHotelValidation.js"></script>
 
 <section>
-    <form class="add-hotel" method="post"  onsubmit="return validateForm()">
+    <form class="add-hotel" method="post" action="../serverSideVal/addHotelValidation.inc.php" onsubmit="return validateForm()">
         <label for="hotel-name">Όνομα ξενοδοχείου:</label><br>
         <input type="text" name="hotel-name" id="hotel-name"/><br><br>
         <?php

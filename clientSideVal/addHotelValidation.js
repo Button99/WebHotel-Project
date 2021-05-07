@@ -16,11 +16,12 @@ function validateForm() {
 
     stars= parseInt(stars);
     rooms= parseInt(rooms);
+    longitude= parseFloat(longitude);
 
     var illegalName= new RegExp("^[a-zA-Z0-9]*$");
     var illegalRooms= new RegExp("^[1-9]{0, 3}");
-    var illegallLat= new RegExp('((\-?|\+?)?\d+(\.\d{7}))');
-    var illegalStars= new RegExp("[1-5] {1}");
+    var illegallLat= new RegExp('-?([1-8]?[1-9]|[1-9]0)\.{1}\d{7}');
+    var illegalStars= new RegExp("[1-5]{1}");
 
     if(hotelName.length < 2 ||  illegalName.test(hotelName)) {
         errorStr+= "Το όνομα του ξενοδοχείου πρέπει να μην περιέχει ειδικούς χαρακτήρες\n";

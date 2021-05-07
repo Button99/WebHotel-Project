@@ -5,13 +5,18 @@
     $usr= $_POST["username"];
     $psw= $_POST["password"];
     
+    $flag= FALSE;
     if(empty($usr) || empty($psw) || strlen($usr) < 8 || strlen($psw) < 8){
         echo "Πρόβλήμα με τα στοιχεία σου!";
-        exit();
+        $flag= TRUE;
     }
 
     if(preg_match("^[A-Za-z]\\w{5, 29}$", $usr)) {
         echo "Πρόβλημα με τα στοιχεία σου!";
+        $flag= TRUE;
+    }
+
+    if($flag == TRUE) {
         exit();
     }
 
