@@ -1,5 +1,4 @@
 function validateForm() {
-    console.log("works");
 
     var hotelName= document.getElementById("hotel-name").value;
     var district= document.getElementById("district").value;
@@ -15,20 +14,19 @@ function validateForm() {
 
     var errorStr= "";
 
-    longitude= parseFloat(longitude).toFixed(7);
-    latitude= parseFloat(latitude).toFixed(7);
     stars= parseInt(stars);
     rooms= parseInt(rooms);
+
     var illegalName= new RegExp("^[a-zA-Z0-9]*$");
     var illegalRooms= new RegExp("^[1-9]{0, 3}");
-    var illegallLat= new RegExp('[0-9]+("."[0-9]+)?');
+    var illegallLat= new RegExp('((\-?|\+?)?\d+(\.\d{7}))');
     var illegalStars= new RegExp("[1-5] {1}");
 
     if(hotelName.length < 2 ||  illegalName.test(hotelName)) {
         errorStr+= "Το όνομα του ξενοδοχείου πρέπει να μην περιέχει ειδικούς χαρακτήρες\n";
     }
 
-    if(district == null) {
+    if(district == "") {
         errorStr+= "Παρακαλώ συμπληρώστε σωστά τον νομό!\n";
     }
 
@@ -36,20 +34,20 @@ function validateForm() {
         errorStr+= "Λάθος στοιχεία διεύθυνσης!\n";
     }
 
-    if(illegalRooms.test(rooms) || rooms== null) {
+    if(illegalRooms.test(rooms) || rooms== "") {
         errorStr+= "Παρακαλώ εισάγεται αριθμητικά στοιχεία μεταξύ 1-999!\n";
     }
     
-    if(illegallLat.test(longitude) || longitude== null) {
+    if(illegallLat.test(longitude) || longitude== "") {
         errorStr+= "Παρακαλώ εισάγεται αριθμητικά στοιχεία με ακρίβεια 7 δεκαδικών\n";
 
     }
 
-    if(illegallLat.test(latitude) || latitude== null) {
+    if(illegallLat.test(latitude) || latitude== "") {
         errorStr+= "Παρακαλώ εισάγεται αριθμητικά στοιχεία με ακρίβεια 7 δεκαδικών\n";
     }
 
-    if(illegalStars.test(stars) || starts== null) {
+    if(illegalStars.test(stars) || stars== "") {
         errorStr+= "Μη επιτρεπτός αριθμός αστεριών!\n";
     }
 
