@@ -18,11 +18,11 @@ function validateForm() {
     longitude= parseFloat(longitude).toFixed(7);
     latitude= parseFloat(latitude).toFixed(7);
     stars= parseInt(stars);
-
-    var illegalName= new RegExp("[a-zA-Z0-9]*");
-    var illegalRooms= new RegExp("[1-999]");
+    rooms= parseInt(rooms);
+    var illegalName= new RegExp("^[a-zA-Z0-9]*$");
+    var illegalRooms= new RegExp("^[1-9]{0, 3}");
     var illegallLat= new RegExp('[0-9]+("."[0-9]+)?');
-    var illegalStars= new RegExp("[1-5]");
+    var illegalStars= new RegExp("[1-5] {1}");
 
     if(hotelName.length < 2 ||  illegalName.test(hotelName)) {
         errorStr+= "Το όνομα του ξενοδοχείου πρέπει να μην περιέχει ειδικούς χαρακτήρες\n";
@@ -36,32 +36,32 @@ function validateForm() {
         errorStr+= "Λάθος στοιχεία διεύθυνσης!\n";
     }
 
-    if(illegalRooms.test(rooms)) {
+    if(illegalRooms.test(rooms) || rooms== null) {
         errorStr+= "Παρακαλώ εισάγεται αριθμητικά στοιχεία μεταξύ 1-999!\n";
     }
     
-    if(illegallLat.test(longitude)) {
+    if(illegallLat.test(longitude) || longitude== null) {
         errorStr+= "Παρακαλώ εισάγεται αριθμητικά στοιχεία με ακρίβεια 7 δεκαδικών\n";
 
     }
 
-    if(illegallLat.test(latitude)) {
+    if(illegallLat.test(latitude) || latitude== null) {
         errorStr+= "Παρακαλώ εισάγεται αριθμητικά στοιχεία με ακρίβεια 7 δεκαδικών\n";
     }
 
-    if(illegalStars.test(stars)) {
+    if(illegalStars.test(stars) || starts== null) {
         errorStr+= "Μη επιτρεπτός αριθμός αστεριών!\n";
     }
 
-    if(hasGym!= "Ναι" && hasGym!= "Οχι") {
+    if(hasGym!= 0 && hasGym!= 1) {
         errorStr+= "Επέλεξε αν το ξενοδοχείο εχει γυμναστήριο!\n";
     }
 
-    if(hasPool!= "Ναι" && hasPool!= "Οχι") {
+    if(hasPool!= 0 && hasPool!= 1) {
         errorStr+= "Επέλεξε αν το ξενοδοχείο εχει πισίνα!\n";
     }
 
-    if(hasCinema!= "Ναι" && hasCinema!= "Οχι") {
+    if(hasCinema!= 0 && hasCinema!= 1) {
         errorStr+= "Επέλεξε αν το ξενοδοχείο εχει σινεμά!\n";
     }
 
