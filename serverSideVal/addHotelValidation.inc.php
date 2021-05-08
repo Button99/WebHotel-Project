@@ -1,8 +1,7 @@
 <?php
     include("../server/conn.inc.php");
-    
 
-    if(isset($_POST["addHotel"])) {
+    if(isset($_POST["addHotel"]) && !empty($_SESSION["userId"])) {
 
         $hotelName= $_POST["hotel-name"];
         $district= $_POST["district"];
@@ -87,6 +86,26 @@
             exit();
         }
 
-        ## TODO: Insert sql, logout, manage session pages
-        
+        ## TODO: Insert sql need more work!
+        try {
+            $sql= "INSERT INTO Hotels WHERE (`hotelName`, `district`, `address`, `numberOfRooms`,
+             `longitude`, `latitude`, `rate`, `pool`, `gym`, `cinema`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+             
+             $stmt= $conn->prepare($sql);
+             $stmt->execute([$hotelName, $district, $address, $rooms, $longititude, $latitude, 
+                             $stars, $pool, $gym, $cinema]);
+                    
+            
+        }
+        catch(PDOException $e) {
+            echo "Error! ". $e->getMessage();
+        }
+
     }
+
+    else {
+        echo "Πρέπει να συνδεθείς πρώτα!<br>";
+        echo '<a href="../screens/logIn.php">Σύνδεση</a>';
+        exit();
+    }
+?>

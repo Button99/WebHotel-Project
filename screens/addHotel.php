@@ -1,9 +1,16 @@
 <?php 
     include("../imports/pageHeader.php");
+    include("../server/conn.inc.php");
+
+    if(empty($_SESSION["userId"])) {
+        echo "Πρέπει να συνδεθείς πρώτα!<br>";
+        echo '<a href="../screens/logIn.php">Σύνδεση</a>';
+        exit();
+    }
+
 ?>
 
 <script src="../clientSideVal/addHotelValidation.js"></script>
-
 <section>
     <form class="add-hotel" method="post" action="../serverSideVal/addHotelValidation.inc.php" onsubmit="return validateForm()">
         <label for="hotel-name">Όνομα ξενοδοχείου:</label><br>
