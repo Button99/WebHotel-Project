@@ -18,19 +18,8 @@
 
         $flag= FALSE;
 
-        echo $hotelName;
-        echo $district;
-        echo $address;
-        echo $phone;
-        echo $rooms;
-        echo $longititude;
-        echo $latitude;
-        echo $stars;
-        echo $hasGym;
-        echo $hasPool;
-        echo $hasCinema;
-
-        if(isset($hotelName) || isset($district) || isset($address) || isset($phone) || isset($rooms) || isset($longitude) || isset($latitude) || isset($stars) || isset($hasGym) || isset($hasCinema) || isset($hasPool)) 
+        if(!isset($hotelName) || !isset($district) || !isset($address) || !isset($phone) || !isset($rooms) || 
+           !isset($longitude) || !isset($latitude) || !isset($stars) || !isset($hasGym) || !isset($hasCinema) || !isset($hasPool)) 
         {
                echo "Παρακαλώ συμπληρώστε τα υποχρεωτικά πεδία!<br>";
                $flag= TRUE;
@@ -41,7 +30,7 @@
             $flag= TRUE;
         }
 
-        if($district== NULL || filter_var($district, FILTER_VALIDATE_INT)) {
+        if($district== NULL) {
             echo "Παρακαλώ συμπληρώστε σωστά τον νομό!<br>";
             $flag= TRUE;
         }
@@ -51,17 +40,17 @@
             $flag= TRUE;
         }
 
-        if(preg_match("[0-9]*", $phone) || strlen(phone) < 3) {
+        if(preg_match("[0-9]*", $phone) || strlen($phone) < 3) {
             echo "Μη επιτρεπτός αριθμός τηλεφώνου!<br>";
             $flag= TRUE;
         }
 
-        if(preg_match("^[1-9]{0, 3}", $rooms) || rooms== NULL) {
+        if(preg_match("^[1-9]{0, 3}", $rooms) || $rooms== NULL) {
             echo "Παρακαλώ εισάγεται αριθμητικά στοιχεία μεταξύ 1-999!<br>";
             $flag= TRUE;
         }
 
-        if(preg_match("-?([1-8]?[1-9]|[1-9]0)\.{1}\d{7}", $longitude) || $longititude < 3) {
+        if(preg_match("-?([1-8]?[1-9]|[1-9]0)\.{1}\d{7}", $longitude) || $longitude < 3) {
             echo "Παρακαλώ εισάγεται αριθμητικά στοιχεία με ακρίβεια 7 δεκαδικών<br>";
             $flag= TRUE;
         }
@@ -100,18 +89,29 @@
             exit();
         }
 
-        ## TODO: Insert sql need more work!
         try {
-            $sql= "INSERT INTO Hotels WHERE (`hotelName`, `district`, `address`, `numberOfRooms`,
-             `longitude`, `latitude`, `rate`, `pool`, `gym`, `cinema`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql= "INSERT INTO `Hotels` (`hotelName`, `district`, `address`, `phone`, `numberOfRooms`,
+             `longitude`, `latitude`, `rate`, `pool`, `gym`, `cinema`) VALUES (:hotelName, :district, :addr, :phone, :numberOfRooms, :longitude, :latitude, :rate, :hasPool, :gym, :cinema);";
              
-             $stmt= $conn->prepare($sql);
-             $stmt->execute([$hotelName, $district, $address, $rooms, $longititude, $latitude, 
-                             $stars, $pool, $gym, $cinema]);
+            $stmt= $conn->prepare($sql);
+
+            $stmt-> bindParam("hotelName", $hotelName, PDO::PARAM_STR);
+            $stmt-> bindParam("district", $district, PDO::PARAM_STR);
+            $stmt-> bindParam("addr", $address, PDO::PARAM_STR);
+            $stmt-> bindParam("phone", $phone, PDO::PARAM_STR);
+            $stmt-> bindParam("numberOfRooms", $rooms, PDO::PARAM_STR);
+            $stmt-> bindParam("longitude", $longitude, PDO::PARAM_STR);
+            $stmt-> bindParam("latitude", $latitude, PDO::PARAM_STR);
+            $stmt-> bindParam("rate", $stars, PDO::PARAM_STR);
+            $stmt-> bindParam("hasPool", $hasPool, PDO::PARAM_STR);
+            $stmt-> bindParam("gym", $hasGym, PDO::PARAM_STR);
+            $stmt-> bindParam("cinema", $hasCinema, PDO::PARAM_STR);
+
+            $stmt->execute();
                     
-            
-        }
-        catch(PDOException $e) {
+            echo "done";
+            header("Location: ../screens/index.php");
+        } catch(PDOException $e) {
             echo "Error! ". $e->getMessage();
         }
 
