@@ -1,15 +1,16 @@
 function validateForm() {
 
-    var hotelName= document.getElementById("hotel-name").value;
+    var hotelName= document.getElementById("hotelName").value;
     var district= document.getElementById("district").value;
     var address= document.getElementById("address").value;
+    var phone= document.getElementById("phone").value;
     var rooms= document.getElementById("rooms").value;
     var longitude= document.getElementById("longitude").value;
     var latitude= document.getElementById("latitude").value;
     var stars= document.getElementById("stars").value;
-    var hasGym= document.getElementById("has-gym").value;
-    var hasPool= document.getElementById("has-pool").value;
-    var hasCinema= document.getElementById("has-cinema").value;
+    var hasGym= document.getElementById("hasGym").value;
+    var hasPool= document.getElementById("hasPool").value;
+    var hasCinema= document.getElementById("hasCinema").value;
     var pictures= document.getElementById("pictures").value;
 
     var errorStr= "";
@@ -17,13 +18,15 @@ function validateForm() {
     stars= parseInt(stars);
     rooms= parseInt(rooms);
     longitude= parseFloat(longitude);
+    latitude= parseFloat(latitude);
 
-    var illegalName= new RegExp("^[a-zA-Z0-9]*$");
-    var illegalRooms= new RegExp("^[1-9]{0, 3}");
+    var illegalName= new RegExp("^[a-zA-Z]$");
+    var illegalAddress= new RegExp("^[a-zA-Z0-9]*$");
     var illegallLat= new RegExp('-?([1-8]?[1-9]|[1-9]0)\.{1}\d{7}');
-    var illegalStars= new RegExp("[1-5]{1}");
+    var illegalStars= new RegExp("[1-5] {1}");
+    var illegalPhone= new RegExp("^[0-9]* {1,20}");
 
-    if(hotelName.length < 2 ||  illegalName.test(hotelName)) {
+    if(hotelName.length < 3 || illegalName.test(hotelName)) {
         errorStr+= "Το όνομα του ξενοδοχείου πρέπει να μην περιέχει ειδικούς χαρακτήρες\n";
     }
 
@@ -31,11 +34,15 @@ function validateForm() {
         errorStr+= "Παρακαλώ συμπληρώστε σωστά τον νομό!\n";
     }
 
-    if(address.length < 3 || illegalName.test(address)) {
+    if(address.length < 3 || illegalAddress.test(address)) {
         errorStr+= "Λάθος στοιχεία διεύθυνσης!\n";
     }
 
-    if(illegalRooms.test(rooms) || rooms== "") {
+    if(phone.length< 3 || illegalPhone.test(phone)) {
+        errorStr+= "Μη επιτρεπτός αριθμός τηλεφώνου!\n";
+    }
+
+    if((rooms <0 || rooms > 999)) {
         errorStr+= "Παρακαλώ εισάγεται αριθμητικά στοιχεία μεταξύ 1-999!\n";
     }
     

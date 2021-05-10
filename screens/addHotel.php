@@ -13,8 +13,8 @@
 <script src="../clientSideVal/addHotelValidation.js"></script>
 <section>
     <form class="add-hotel" method="post" action="../serverSideVal/addHotelValidation.inc.php" onsubmit="return validateForm()">
-        <label for="hotel-name">Όνομα ξενοδοχείου:</label><br>
-        <input type="text" name="hotel-name" id="hotel-name"/><br><br>
+        <label for="hotelName">Όνομα ξενοδοχείου:</label><br>
+        <input type="text" name="hotelName" id="hotelName"/><br><br>
         <?php
                 $arr= array("Έβρου", "Ροδόπης", "Ξάνθης", "Δράμας", "Καβάλας", "Θεσσαλονίκης", "Χαλκιδικής", "Ημαθίας", "Κιλκίς", "Πέλλας", "Πιερίας", "Σερρών",
                 "Κοζάνης", "Φλώρινας", "Γρεβενών", "Καστοριάς", "Ιωαννίνων", "Άρτας", "Πρέβεζας", "Θεσπρωτίας", "Λάρισας", "Καρδίτσας", "Μαγνησίας", "Τρικάλων", "Βοιωτίας", "Ευβοίας", "Ευρυτανίας",
@@ -31,8 +31,10 @@
         <br><br>
         <label for="address">Διεύθυνση:</label><br>
         <input type="text" name="address" id="address"/><br><br>
+        <label for="phone">Τηλέφωνο:</label><br>
+        <input type="text" name="phone" id="phone" /><br><br>
         <label for="rooms">Δωμάτια:</label><br>
-        <input type="text" name="rooms" id="rooms"/><br><br>
+        <input type="number" name="rooms" id="rooms" min="1" max="999" value="1" /><br><br>
         <label for="longtitude">Γεωγραφικό μήκος:</label><br>
         <input type="text" name="longitude"id="longitude"/><br><br>
         <label for="latitude">Γεωγραφικό πλάτος:</label><br>
@@ -46,8 +48,8 @@
             echo "</select>";
             echo "<br><br>";
             $boolArr= array("Ναι", "Οχι");
-            echo '<label for="has-gym">Γυμναστήριο:</label><br>';
-            echo '<select name="has-gym" id="has-gym">';
+            echo '<label for="hasGym">Γυμναστήριο:</label><br>';
+            echo '<select name="hasGym" id="hasGym">';
             for($index= 0; $index< sizeof($boolArr); $index++) {
                 echo "<option value=". $index .">".$boolArr[$index] ."</option>";
             }
@@ -55,16 +57,16 @@
         // Pool
                 $boolArr= array("Ναι", "Οχι");
                 
-                echo '<label for="has-pool">Πισίνα:</label><br>';
-                echo '<select name="has-pool" id="has-pool">';
+                echo '<label for="hasPool">Πισίνα:</label><br>';
+                echo '<select name="hasPool" id="hasPool">';
                 for($index= 0; $index< sizeof($boolArr); $index++) {
                     echo "<option value=". $index .">".$boolArr[$index] ."</option>";
                 }
                 echo "</select>";
                 echo "<br><br>";
         // Cinema                
-                echo '<label for="has-cinema">Σινεμά:</label><br>';
-                echo '<select name="has-cinema" id="has-cinema">';
+                echo '<label for="hasCinema">Σινεμά:</label><br>';
+                echo '<select name="hasCinema" id="hasCinema">';
                 for($index= 0; $index< sizeof($boolArr); $index++) {
                     echo "<option value=". $index .">".$boolArr[$index] ."</option>";
                 }
