@@ -42,7 +42,9 @@ html, body {
 }
 
 .finder {
-    grid-area: nav;
+    margin: 0.5rem;
+    border-bottom-style: solid;
+    border-color: #E6E2DD;
 }
 
 .finder form {

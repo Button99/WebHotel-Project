@@ -30,9 +30,20 @@
         <section class="finder">
             <form method="post" action="../serverSideVal/formSearch.inc.php" onsubmit="return validateForm()">
                 <label for="hotel-name">Προορισμός:</label>
-                <input type="text" name="hotel-name" id="hotel-name"/>
+                <?php
+                    $arr= array("Έβρου", "Ροδόπης", "Ξάνθης", "Δράμας", "Καβάλας", "Θεσσαλονίκης", "Χαλκιδικής", "Ημαθίας", "Κιλκίς", "Πέλλας", "Πιερίας", "Σερρών",
+                    "Κοζάνης", "Φλώρινας", "Γρεβενών", "Καστοριάς", "Ιωαννίνων", "Άρτας", "Πρέβεζας", "Θεσπρωτίας", "Λάρισας", "Καρδίτσας", "Μαγνησίας", "Τρικάλων", "Βοιωτίας", "Ευβοίας", "Ευρυτανίας",
+                    "Φωκίδας", "Φθιώτιδας", "Κεφαλληνίας", "Κέρκυρας", "Λευκάδας", "Ζακύνθου", "Αχαΐας", "Ηλείας", "Αιτωλοακαρνανίας", "Αρκαδίας", "Αργολίδας", "Κορινθίας", "Λακωνίας", "Μεσσηνίας", "Αθηνών", "Ανατολικής Αττικής",
+                    "Πειραιώς", "Δυτικής Αττικής", "Χίου", "Λέσβου", "Σάμου", "Κυκλάδων", "Δωδεκανήσου", "Ηρακλείου", "Χανίων", "Λασιθίου", "Ρεθύμνης");
+                    
+                    echo '<select name="hotel-name" id="hotel-name">';
+                    for($index= 0; $index< sizeof($arr); $index++) {
+                        echo "<option value=". $index .">".$arr[$index] ."</option>";
+                    }
+                    echo "</select>";
+                ?>
                 <label for="persons">Άτομα:</label>
-                <input type="text" name="persons" id="persons"/>
+                <input type="number" name="persons" id="persons" min="1" max="100" value="1"/>
                 <label for="date">Ημερομηνία:</label>
                 <input type="date" name="date" id="date"/>
                 <button>Αναζήτηση</button>
