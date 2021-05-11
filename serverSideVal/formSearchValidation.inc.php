@@ -2,15 +2,15 @@
 
     include("../server/conn.inc.php");
 
-    $district= $_POST["dsc"];
-    $rooms= $_POST["room"];
-    $date= $_POST["date"];
+    $district= $_GET["dsc"];
+    $rooms= $_GET["room"];
+    $date= $_GET["date"];
 
     $flag= FALSE;
-    echo $district;
-    if(isset($_POST["searchHotel"])) {
 
-        if(!isset($district) && !isset($people) && !isset($date)) {
+    if(isset($_GET["searchHotel"])) {
+
+        if(!isset($district) && !isset($rooms) && !isset($date)) {
             echo "Συμπληρώστε όλα τα κενά!<br>";
             $flag= TRUE;
             exit();
@@ -53,25 +53,28 @@
             $stmt-> closeCursor();
             $record= null;
 
-            $sql= "SELECT * FROM `Hotels` WHERE `district`=:district AND `numberOfRooms`>=:rooms;";
+            $sql= "SELECT * FROM `Hotels` WHERE `district`=:district AND `numberOfRooms`>=:rooms  LIMIT :startIndex, :recordsPerPage; ";
             $stmt= $conn->prepare($sql);
 
             $stmt-> bindParam("district", $district, PDO::PARAM_STR);
             $stmt-> bindParam("rooms", $rooms, PDO::PARAM_STR);
+            $stmt-> bindParam("startIndex", $startIndex, PDO::PARAM_INT);
+            $stmt-> bindParam("recordsPerPage", $recordsPerPage, PDO::PARAM_INT);
             $stmt-> execute();
 
-            while($record= $stmt-> fetch(PDO::FETCH_ASSOC) ) {
-                $record= $stmt-> fetch(PDO::FETCH_ASSOC);
-                echo "works ";
-            }
+            $count= $stmt-> rowCount();
+            $record= $stmt-> fetch(PDO::FETCH_OBJ);
 
             if($record) {
                 header("Location: ../screens/searchHotel.php");
             }
 
-            echo "Error! cant find place";
-
+            else {
+                echo "Error! cant find place<br>";
+            }
         } catch(PDOException $e) {
             echo "Error <br>" . $e -> getMessage();
         }
+        $stmt-> closeCursor();
     }
+?>

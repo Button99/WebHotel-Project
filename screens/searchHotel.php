@@ -1,12 +1,13 @@
 <?php 
     include("../imports/pageHeader.php");
     include("../server/conn.inc.php");
+    include("../serverSideVal/formSearchValidation.inc.php");
 ?>
 <section>
     <?php
-            while($record= $stmt-> fetch(PDO::FETCH_ASSOC) ) {
-                // echo $record["hotelID"];
-            }
+        if($_SESSION["record"]) {
+            echo $_SESSION["record"];
+        }
     ?>
 </section>
 

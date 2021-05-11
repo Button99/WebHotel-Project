@@ -28,7 +28,7 @@
             </header>
         </section>
         <section class="finder">
-            <form method="post" action="../serverSideVal/formSearchValidation.inc.php" onsubmit="return validateForm()">
+            <form method="GET" action="../serverSideVal/formSearchValidation.inc.php" onsubmit="return validateForm()">
                 <label for="dsc">Προορισμός:</label>
                 <?php
                     $arr= array("Έβρου", "Ροδόπης", "Ξάνθης", "Δράμας", "Καβάλας", "Θεσσαλονίκης", "Χαλκιδικής", "Ημαθίας", "Κιλκίς", "Πέλλας", "Πιερίας", "Σερρών",
