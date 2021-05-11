@@ -1,15 +1,15 @@
 function validateForm() {
         var errorStr= "";
     
-        var town= document.getElementById("hotel-name").value;
+        var district= document.getElementById("dsc").value;
         var people= document.getElementById("persons").value;
         var date= document.getElementById("date").value;
         var illegalDate= new RegExp("/^\d{2}[./-]\d{2}[./-]\d{4}$/");
         var illegalNumber= new RegExp("[\d]");
-        var illegalTown= new RegExp("^[a-zA-Z]+$");
+        var illegalDistrict= new RegExp("[Ͱ-Ͼἀ-῾]"); // regex for greek words
 
-        if(town.length < 2 || !illegalTown.test(town)) {
-            errorStr+= "O Προορισμός πρέπει να είναι πάνω απο 2 λέξεις ή" +
+        if(district.length < 2 || !illegalDistrict.test(district)) {
+            errorStr+= "O Προορισμός πρέπει να είναι πάνω απο 2 λέξεις ή " +
                        "δεν πρέπει να περιέχει αριθμούς!\n";
         }
     
