@@ -1,6 +1,6 @@
 <?php
     $servername= "localhost";
-    $username= "root";
+    $username= "webhoteluser";
     $password= "";
 
     try {
@@ -11,7 +11,8 @@
     }
     
     catch (PDOException $p) {
-        echo "Πρόβλημα με τον server"; 
+        echo "Πρόβλημα με τον server";
+        echo $p-> getMessage();
     }
     
 ?>

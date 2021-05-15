@@ -35,7 +35,8 @@
             echo "redirect... Success!";
             header("Location: ../screens/logIn.php");
         } catch(PDOException $e) {
-            echo "<br> Πρόβλημα με κατά την εξυπηρέτηση του server παρακαλώ προσπαθήστε ξανά!";
+            echo $e-> getMessage();
+            echo "<br> Πρόβλημα κατά την εξυπηρέτηση του server παρακαλώ προσπαθήστε ξανά!";
         }
     }
 ?>
