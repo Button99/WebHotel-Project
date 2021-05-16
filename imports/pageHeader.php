@@ -18,8 +18,7 @@
                     }
                     else {
                         echo '<a class="btn" href="../screens/logout.php" name="login-btn"><button>Αποσύνδεση</button></a>';
-                        echo '<a class="btn" href="../screens/addHotel.php"><button>Προσθήκη Ξενοδοχείου</button></a>';
-                        echo '<a class="btn" href="../screens/showMyHotels.php"><button>Τα Ξενοδοχεία μου</button></a>';
+                        echo '<a class="btn" href="../screens/addHotel.php"><button>Προσθήκη Ξενοδοχείου/Επεξεργασία</button></a>';
                     }
 
                     

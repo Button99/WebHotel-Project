@@ -1,13 +1,18 @@
 <?php 
     include("../imports/pageHeader.php");
     include("../server/conn.inc.php");
-
+    include("../serverSideVal/addHotelValidation.inc.php");
+    
     if(empty($_SESSION["userId"])) {
         echo "Πρέπει να συνδεθείς πρώτα!<br>";
         echo '<a href="../screens/logIn.php">Σύνδεση</a>';
         exit();
     }
 
+    $res= hasHotel();
+    if($res) {
+        echo "<b>Έχεις Προσθέσει ήδη ξενοδοχείο για οποιαδήποτε αλλαγή γίνει θα ενημερωθεί το παρόν ξενοδοχείο</b><br>";
+    }
 ?>
 
 <script src="../clientSideVal/addHotelValidation.js"></script>

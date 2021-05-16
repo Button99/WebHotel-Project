@@ -1,5 +1,22 @@
 <?php
     include("../server/conn.inc.php");
+    // SQL Query if user has already hotel
+
+    function hasHotel() {
+        include("../server/conn.inc.php");
+        try {
+            $sql= "SELECT * FROM `Hotels` WHERE `Users_userID`=1;";
+            $stmt= $conn->query($sql);
+            $res= $stmt-> execute();
+            if($res) {
+                return TRUE;
+            }
+
+            return FALSE;
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+    }
+    }
 
     if(isset($_POST["addHotel"]) && !empty($_SESSION["userId"])) {
 
@@ -88,38 +105,65 @@
         if($flag == TRUE) {
             exit();
         }
+        $res= hasHotel();
 
-        try {
-            $sql= "INSERT INTO `Hotels` (`hotelName`, `district`, `address`, `phone`, `numberOfRooms`,
-             `longitude`, `latitude`, `rate`, `pool`, `gym`, `cinema`) VALUES (:hotelName, :district, :addr, :phone, :numberOfRooms, :longitude, :latitude, :rate, :hasPool, :gym, :cinema);";
-             
-            $stmt= $conn->prepare($sql);
-
-            $stmt-> bindParam("hotelName", $hotelName, PDO::PARAM_STR);
-            $stmt-> bindParam("district", $district, PDO::PARAM_STR);
-            $stmt-> bindParam("addr", $address, PDO::PARAM_STR);
-            $stmt-> bindParam("phone", $phone, PDO::PARAM_STR);
-            $stmt-> bindParam("numberOfRooms", $rooms, PDO::PARAM_STR);
-            $stmt-> bindParam("longitude", $longitude, PDO::PARAM_STR);
-            $stmt-> bindParam("latitude", $latitude, PDO::PARAM_STR);
-            $stmt-> bindParam("rate", $stars, PDO::PARAM_STR);
-            $stmt-> bindParam("hasPool", $hasPool, PDO::PARAM_STR);
-            $stmt-> bindParam("gym", $hasGym, PDO::PARAM_STR);
-            $stmt-> bindParam("cinema", $hasCinema, PDO::PARAM_STR);
-
-            $stmt->execute();
-                    
-            echo "done";
-            header("Location: ../screens/index.php");
-        } catch(PDOException $e) {
-            echo "Error! ". $e->getMessage();
+        if($res) {
+            try {
+                $sql="UPDATE `Hotels` SET `hotelName`=:hotelName, `district`=:district, `address`=:addr, `phone`=:phone, `numberOfRooms`=:numberOfRooms,
+                `longitude`:=longitude, `latitude`=:latitude, `rate`=:rate, `pool`=:hasPool, `gym`=:gym, `cinema`=:cinema, `Users_userID`=:usrId WHERE `Users_userID`=:usrId;";
+                
+                $stmt= $conn->prepare($sql);
+                $stmt-> bindParam("hotelName", $hotelName, PDO::PARAM_STR);
+                $stmt-> bindParam("district", $district, PDO::PARAM_STR);
+                $stmt-> bindParam("addr", $address, PDO::PARAM_STR);
+                $stmt-> bindParam("phone", $phone, PDO::PARAM_STR);
+                $stmt-> bindParam("numberOfRooms", $rooms, PDO::PARAM_STR);
+                $stmt-> bindParam("longitude", $longitude, PDO::PARAM_STR);
+                $stmt-> bindParam("latitude", $latitude, PDO::PARAM_STR);
+                $stmt-> bindParam("rate", $stars, PDO::PARAM_STR);
+                $stmt-> bindParam("hasPool", $hasPool, PDO::PARAM_STR);
+                $stmt-> bindParam("gym", $hasGym, PDO::PARAM_STR);
+                $stmt-> bindParam("cinema", $hasCinema, PDO::PARAM_STR);
+                $stmt-> bindParam("usrId", $_SESSION["userId"], PDO::PARAM_STR);
+    
+                $stmt->execute();
+                header("Location: ../screens/index.php");
+            } catch(PDOException $e) {
+                echo $e->getMessage();
+            }
         }
+        else {
+            try {
+                $sql= "INSERT INTO `Hotels` (`hotelName`, `district`, `address`, `phone`, `numberOfRooms`,
+                `longitude`, `latitude`, `rate`, `pool`, `gym`, `cinema`, `Users_userID`, `Users_username`, `Users_email`) 
+                VALUES (:hotelName, :district, :addr, :phone, :numberOfRooms, :longitude, :latitude, :rate, :hasPool,
+                :gym, :cinema, :usrId, :usrname, :usremail);";
+                
+                $stmt= $conn->prepare($sql);
 
-    }
+                $stmt-> bindParam("hotelName", $hotelName, PDO::PARAM_STR);
+                $stmt-> bindParam("district", $district, PDO::PARAM_STR);
+                $stmt-> bindParam("addr", $address, PDO::PARAM_STR);
+                $stmt-> bindParam("phone", $phone, PDO::PARAM_STR);
+                $stmt-> bindParam("numberOfRooms", $rooms, PDO::PARAM_STR);
+                $stmt-> bindParam("longitude", $longitude, PDO::PARAM_STR);
+                $stmt-> bindParam("latitude", $latitude, PDO::PARAM_STR);
+                $stmt-> bindParam("rate", $stars, PDO::PARAM_STR);
+                $stmt-> bindParam("hasPool", $hasPool, PDO::PARAM_STR);
+                $stmt-> bindParam("gym", $hasGym, PDO::PARAM_STR);
+                $stmt-> bindParam("cinema", $hasCinema, PDO::PARAM_STR);
+                $stmt-> bindParam("usrId", $_SESSION["userId"], PDO::PARAM_STR);
+                $stmt-> bindParam("usrname", $_SESSION["username"], PDO::PARAM_STR);
+                $stmt-> bindParam("usremail", $_SESSION["email"], PDO::PARAM_STR);
 
-    else {
-        echo "Πρέπει να συνδεθείς πρώτα!<br>";
-        echo '<a href="../screens/logIn.php">Σύνδεση</a>';
-        exit();
+                $stmt->execute();
+                        
+                echo "done";
+                header("Location: ../screens/index.php");
+            } catch(PDOException $e) {
+                echo "Error! ". $e->getMessage();
+            }
+
+        }
     }
 ?>

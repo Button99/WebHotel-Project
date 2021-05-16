@@ -34,8 +34,15 @@
         $count= $stmt->rowCount();
         $data= $stmt->fetch(PDO::FETCH_OBJ);
 
+        if($data->isValid== 0) {
+            header("Location: ../screens/index.php");
+            exit();
+        }
+
         if($count) {
             $_SESSION["userId"]= $data->userID;
+            $_SESSION["username"]= $data->username;
+            $_SESSION["email"]= $data->email;
             header("Location: ../screens/index.php");
         }
         else {
