@@ -33,7 +33,15 @@
 
             $conn ->exec($sql);
             echo "redirect... Success!";
-            header("Location: ../screens/logIn.php");
+            $subject= "works";
+            $message= "hello from localhost";
+            $res=mail($email, $subject, $message);
+            if($res) {
+                header("Location: ../screens/logIn.php");
+            }
+            else {
+                echo "not";
+            }
         } catch(PDOException $e) {
             echo $e-> getMessage();
             echo "<br> Πρόβλημα κατά την εξυπηρέτηση του server παρακαλώ προσπαθήστε ξανά!";
