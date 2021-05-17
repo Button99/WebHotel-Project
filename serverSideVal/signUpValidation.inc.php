@@ -11,12 +11,12 @@
             $flag= TRUE;
         }
         
-        if(preg_match("^[A-Za-z]\\w{5, 29}$", $usr)) {
+        if(preg_match("/^[A-Za-z]\\w{5, 29}$/", $usr)) {
             echo "Πρόβλημα με τα στοιχεία σου! usr";
             $flag= TRUE;
         }
 
-        if(preg_match("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$", $psw)) {
+        if(preg_match("/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$/", $psw)) {
             echo "Πρόβλημα με τα στοιχεία σου! psw";
             $flag= TRUE;
         }
@@ -40,7 +40,7 @@
                 header("Location: ../screens/logIn.php");
             }
             else {
-                echo "not";
+                echo "Πρόβλημα με τον σέρβερ<br>Προσπαθήστε ξανά";
             }
         } catch(PDOException $e) {
             echo $e-> getMessage();

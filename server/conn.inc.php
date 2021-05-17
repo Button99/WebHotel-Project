@@ -1,6 +1,6 @@
 <?php
     $servername= "localhost";
-    $username= "webhoteluser";
+    $username= "root";
     $password= "";
 
     try {
