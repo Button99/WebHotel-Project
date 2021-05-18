@@ -35,7 +35,9 @@
         $data= $stmt->fetch(PDO::FETCH_OBJ);
 
         if($data->isValid== 0) {
-            header("Location: ../screens/index.php");
+            $errormsg= "Πρέπει πρώτα να γίνει επιβεβαίωση!";
+            header("Location: ../screens/error.php");
+
             exit();
         }
 

@@ -22,7 +22,8 @@ function validateForm() {
 
     var illegalName= new RegExp("^[a-zA-Z]$");
     var illegalAddress= new RegExp("^[a-zA-Z0-9]*$");
-    var illegallLat= new RegExp('-?([1-8]?[1-9]|[1-9]0)\.{1}\d{7}');
+    var illegallLat= new RegExp('^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,7})?))$');
+    var illegallLot= new RegExp('^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,7})?))$');
     var illegalStars= new RegExp("[1-5] {1}");
     var illegalPhone= new RegExp("^[0-9]* {1,20}");
 
@@ -46,7 +47,7 @@ function validateForm() {
         errorStr+= "Παρακαλώ εισάγεται αριθμητικά στοιχεία μεταξύ 1-999!\n";
     }
     
-    if(illegallLat.test(longitude) || longitude== "") {
+    if(illegallLot.test(longitude) || longitude== "") {
         errorStr+= "Παρακαλώ εισάγεται αριθμητικά στοιχεία με ακρίβεια 7 δεκαδικών\n";
 
     }

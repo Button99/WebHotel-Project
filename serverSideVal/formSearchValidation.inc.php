@@ -12,7 +12,7 @@
             exit();
         }
 
-        if(preg_match("^[a-zA-Z]+$", $district) || !isset($district)) {
+        if(preg_match("/^[a-zA-Z]+$/", $district) || !isset($district)) {
             echo "Συμπληρώστε την περιοχή!<br>";
             $flag= TRUE;
         }

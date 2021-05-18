@@ -1,5 +1,6 @@
 <?php 
     include("../server/conn.inc.php");
+    include("../sendMail/sendMail.inc.php");
 
     if(isset($_POST["signUp"])) {
         $usr= $_POST["username"];
@@ -28,19 +29,20 @@
 
         try {
             $hashedPsw= openssl_digest($psw, "sha512");
-            $sql= "INSERT INTO `Users` (`username`, `password`, `email`) VALUES
-                ('$usr', '$hashedPsw', '$email');";
+            $vkey= md5(time().$usr);
+            $sql= "INSERT INTO `Users` (`username`, `password`, `email`, `vkey`) VALUES
+                ('$usr', '$hashedPsw', '$email', '$vkey');";
 
             $conn ->exec($sql);
-            echo "redirect... Success!";
-            $subject= "works";
-            $message= "hello from localhost";
-            $res=mail($email, $subject, $message);
+            // Generate vkey
+            $res= sendMail($email, $vkey);
             if($res) {
                 header("Location: ../screens/logIn.php");
             }
             else {
                 echo "Πρόβλημα με τον σέρβερ<br>Προσπαθήστε ξανά";
+                $sql= "DELETE FROM `Users` WHERE `username`=$usr";
+                $conn->exec($sql);
             }
         } catch(PDOException $e) {
             echo $e-> getMessage();
