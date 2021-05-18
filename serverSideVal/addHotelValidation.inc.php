@@ -1,11 +1,10 @@
 <?php
     include("../server/conn.inc.php");
-    // SQL Query if user has already hotel
 
     function hasHotel() {
         include("../server/conn.inc.php");
         try {
-            $sql= "SELECT * FROM `Hotels` WHERE `Users_userID`=1;";
+            $sql= "SELECT * FROM `Hotels` WHERE `Users_userID`={$_SESSION['userId']};";
             $stmt= $conn->query($sql);
             $res= $stmt-> execute();
             if($res) {
@@ -31,7 +30,10 @@
         $hasGym= $_POST["hasGym"];
         $hasPool= $_POST["hasPool"];
         $hasCinema= $_POST["hasCinema"];
-        $pictures= $_POST["pictures"];
+        $$uploadFile= $_FILES["upload"]["tmp_name"];
+        $uploadName= $_FILES["upload"]["name"];
+        $uploadType= $_FILES["upload"]["type"];
+        $desc= $_POST["desc"];
 
         $flag= FALSE;
 
@@ -42,7 +44,7 @@
                $flag= TRUE;
         }
 
-        if(preg_match("^[a-zA-Z0-9]*$", $hotelName) || $hotelName== "") {
+        if(preg_match("/^[a-zA-Z0-9]*$/", $hotelName) || $hotelName== "") {
             echo "Το όνομα του ξενοδοχείου πρέπει να μην περιέχει ειδικούς χαρακτήρες<br>";
             $flag= TRUE;
         }
@@ -52,32 +54,32 @@
             $flag= TRUE;
         }
 
-        if(preg_match("^[a-zA-Z0-9]*$", $address) || strlen($address) < 3) {
+        if(preg_match("/^[a-zA-Z0-9]*$/", $address) || strlen($address) < 3) {
             echo "Λάθος στοιχεία διεύθυνσης!<br>";
             $flag= TRUE;
         }
 
-        if(preg_match("[0-9]*", $phone) || strlen($phone) < 3) {
+        if(preg_match("/[0-9]*", $phone) || strlen($phone) < 3) {
             echo "Μη επιτρεπτός αριθμός τηλεφώνου!<br>";
             $flag= TRUE;
         }
 
-        if(preg_match("^[1-9]{0, 3}", $rooms) || $rooms== NULL) {
+        if(preg_match("/^[1-9]{0, 3}/", $rooms) || $rooms== NULL) {
             echo "Παρακαλώ εισάγεται αριθμητικά στοιχεία μεταξύ 1-999!<br>";
             $flag= TRUE;
         }
 
-        if(preg_match("-?([1-8]?[1-9]|[1-9]0)\.{1}\d{7}", $longitude) || $longitude < 3) {
+        if(preg_match("/-?([1-8]?[1-9]|[1-9]0)\.{1}\d{7}/", $longitude) || $longitude < 3) {
             echo "Παρακαλώ εισάγεται αριθμητικά στοιχεία με ακρίβεια 7 δεκαδικών<br>";
             $flag= TRUE;
         }
 
-        if(preg_match("-?([1-8]?[1-9]|[1-9]0)\.{1}\d{7}", $latitude) || $latitude < 3) {
+        if(preg_match("/-?([1-8]?[1-9]|[1-9]0)\.{1}\d{7}/", $latitude) || $latitude < 3) {
             echo "Παρακαλώ εισάγεται αριθμητικά στοιχεία με ακρίβεια 7 δεκαδικών<br>";
             $flag= TRUE;
         }
 
-        if(preg_match("[1-5]{1}", $stars)) {
+        if($stars<1 && $stars >5) {
             echo "Μη επιτρεπτός αριθμός αστεριών!<br>";
             $flag= TRUE;
         }
@@ -97,7 +99,7 @@
             $flag= TRUE;
         }
     
-        if($pictures== NULL) {
+        if($uploadType!= "image/jpeg") {
             echo "Παρακαλώ προσθέστε φωτογραφίες!<br>";
             $flag= TRUE;
         }
@@ -107,7 +109,7 @@
         }
         $res= hasHotel();
 
-        if($res) {
+        if($res && 2 == 3) {
             try {
                 $sql="UPDATE `Hotels` SET `hotelName`=:hotelName, `district`=:district, `address`=:addr, `phone`=:phone, `numberOfRooms`=:numberOfRooms,
                 `longitude`:=longitude, `latitude`=:latitude, `rate`=:rate, `pool`=:hasPool, `gym`=:gym, `cinema`=:cinema, `Users_userID`=:usrId WHERE `Users_userID`=:usrId;";
@@ -126,8 +128,24 @@
                 $stmt-> bindParam("cinema", $hasCinema, PDO::PARAM_STR);
                 $stmt-> bindParam("usrId", $_SESSION["userId"], PDO::PARAM_STR);
     
-                $stmt->execute();
-                header("Location: ../screens/index.php");
+                $res= $stmt->execute();
+
+                $tempfile = fopen($uploadFile, 'rb');
+                $filedata = fread($tempfile, filesize($uploadFile));
+                $filedata = addslashes($filedata);
+                
+                $sql= "INSERT INTO `pictures` (name, mimetype, description, filedata) VALUES ($uploadFile, $uploadType, $desc, $filedata);";
+                $stmt= $conn->prepare($sql);
+                echo "works here 1";
+                $stmt-> execute();
+
+                $filename= "C:/Uploads/".com_create_guid()."jpg";
+                if(copy($files, $filename) && $res) {
+                    header("Location: ../screens/index.php");
+                }
+                else {
+                    echo "Πρόβλημα!";
+                }
             } catch(PDOException $e) {
                 echo $e->getMessage();
             }
@@ -157,7 +175,21 @@
                 $stmt-> bindParam("usremail", $_SESSION["email"], PDO::PARAM_STR);
 
                 $stmt->execute();
-                        
+
+                $tempfile = fopen($uploadFile, 'rb');
+                $filedata = fread($tempfile, filesize($uploadFile));
+                $filedata = addslashes($filedata);
+                // Get the hotel id bef4 send
+
+                $sql= "SELECT `hotelID` FROM `Hotels` WHERE `Users_userID`=:usrId";
+                $stmt= $conn->prepare($sql);
+                $stmt-> bindParam("usrId", $_SESSION["userId"], PDO::PARAM_STR);
+                $res= $stmt->execute();
+
+                $sql= "INSERT INTO `pictures` (filenames, mimetype, descr, filedata, Hotel_hotelID) VALUES ($uploadFile, $uploadType, $desc, $filedata, $res);";
+                $stmt= $conn->prepare($sql);
+                echo "works here";
+                $stmt-> execute();
                 echo "done";
                 header("Location: ../screens/index.php");
             } catch(PDOException $e) {

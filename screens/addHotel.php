@@ -17,7 +17,7 @@
 
 <script src="../clientSideVal/addHotelValidation.js"></script>
 <section>
-    <form class="add-hotel" method="post" action="../serverSideVal/addHotelValidation.inc.php" onsubmit="return validateForm()">
+    <form class="add-hotel" method="post" action="../serverSideVal/addHotelValidation.inc.php" onsubmit="return validateForm()" enctype="multipart/form-data">
         <label for="hotelName">Όνομα ξενοδοχείου:</label><br>
         <input type="text" name="hotelName" id="hotelName"/><br><br>
         <?php
@@ -74,8 +74,8 @@
                 echo "<br><br>";
         ?>
 
-        <label for="pictures">Φωτογραφίες:</label><br>
-        <input type="file" name="pictures" id="pictures" multiple/><br><br>
+        <label for="upload">Φωτογραφίες:</label><br>
+        <input type="file" name="upload" id="upload" multiple/> </label for="desc" >Περιγραφή:</label><input type="text" name="desc" id="desc">Περιγραφή:</<br><br>
         <button type="submit" name="addHotel" id="addHotel">Προσθήκη</button>
     </form>
 </section>
