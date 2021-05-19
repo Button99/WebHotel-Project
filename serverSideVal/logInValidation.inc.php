@@ -11,7 +11,7 @@
         $flag= TRUE;
     }
 
-    if(preg_match("^[A-Za-z]\\w{5, 29}$", $usr)) {
+    if(preg_match("#^[A-Za-z]\\w{5, 29}$#", $usr)) {
         echo "Πρόβλημα με τα στοιχεία σου!";
         $flag= TRUE;
     }

@@ -22,7 +22,7 @@
             $flag= TRUE;
         }
 
-        if(preg_match("/^\d{2}[./-]\d{2}[./-]\d{4}$/", $date) || !isset($date)) {
+        if(preg_match("#^\d{2}[./-]\d{2}[./-]\d{4}$#", $date) || !isset($date)) {
             echo "Συμπληρώστε σωστά την ημερομηνία!<br>";
             $flag= TRUE;
         }

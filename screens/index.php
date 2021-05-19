@@ -20,7 +20,6 @@
 
         </li>
 
-
         <li>
             <a href="patra.php"><img src="../media/Patra.jpg" tag="Patra"/>
             <h3>Πάτρα</h3></a>

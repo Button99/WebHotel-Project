@@ -41,10 +41,17 @@
                 $stmt-> bindParam("recordsPerPage", $recordsPerPage, PDO::PARAM_INT);
                 $stmt-> execute();
 
-                while($record= $stmt-> fetch(PDO::FETCH_ASSOC)) {
-                    echo $record["hotelName"]; 
-                }
+                echo "<section class='hotel-pictures'>";
+                echo "<ul class='hotel-cards'>";
 
+                while($record= $stmt-> fetch(PDO::FETCH_ASSOC)) {
+                    echo '<li><a href="athens.php"><img src="../media/Athens.jpg" tag="Athens" />';
+                    echo "<h3> " .$record["hotelName"]. "</h3></a>";
+                    echo "<p> Νομός: " .$record["district"]. "</p>";
+                    echo "<p> Τηλέφωνο: " .$record["phone"]. "</p></li>"; 
+                }
+                
+                echo "</ul></section>";
             } catch(PDOException $e) {
                 echo "Error <br>" . $e -> getMessage();
             }
