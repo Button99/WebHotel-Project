@@ -130,3 +130,29 @@ footer p {
     border: 1px solid #373A36;
     text-align: center;
 }
+
+/*************** searchHotel page ***********/
+ .hotel-pictures {
+    margin: 2rem;
+    width: 90%;
+
+} 
+
+.hotel-cards li{
+    text-align: justify;
+    width: 80%;    
+    margin: 3rem;
+    border-bottom-style: solid;
+    border-color: #E6E2DD;
+    display: flexbox;
+    list-style-type: none;
+}
+.hotel-cards li h3, p {
+    margin: 0.8rem; 
+    color: black;
+}
+
+.hotel-cards li a img {
+    width: 30%;
+    margin: 1rem;
+}
