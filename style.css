@@ -170,3 +170,7 @@ footer p {
     float: inline-end; 
     padding-right: 5rem;
 }
+
+.frame {
+    float: left;
+}
