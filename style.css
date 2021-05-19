@@ -156,3 +156,17 @@ footer p {
     width: 30%;
     margin: 1rem;
 }
+
+
+/******************* hotelDetail page ********/
+.hotel-detail img {
+    width: 20%;
+    float: left;
+}
+
+.hotel-detail p{
+    display: inline;
+    width: 77%;
+    float: inline-end; 
+    padding-right: 5rem;
+}
