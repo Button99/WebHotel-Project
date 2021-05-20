@@ -8,11 +8,9 @@
 
         $conn -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         session_start();
-    }
-    
-    catch (PDOException $p) {
+    } catch (PDOException $e) {
         echo "Πρόβλημα με τον server";
-        echo $p-> getMessage();
+        echo $e-> getMessage();
     }
     
 ?>

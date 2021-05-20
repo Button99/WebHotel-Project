@@ -2,18 +2,69 @@
     include("../imports/pageHeader.php");
     include("../server/conn.inc.php");
     if($_GET["hotel"]) {
-        echo '<section class="hotel-detail">';
-        echo '<img src="../media/Athens.jpg" tag="Athens" />';
-        echo '<p> Hotel name<br> district<br> address<br> phone<br> ';
-        echo '<br> Stars /5';
-        echo '<br>Pool: ';
-        echo '<br>Gym: ';
-        echo '<br>Cinema: ';
-        echo '</p></section>';
-        echo '<section class="frame">';
-        echo '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12597.206619302478!2d23.734958767890944!3d37.87662759529743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1be33fa732799%3A0xa0dd26a4ef660500!2sGlyfada%20Golf%20Club%20of%20Athens!5e0!3m2!1sel!2sgr!4v1621433641730!5m2!1sel!2sgr" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>';
-        echo '</section>';
+        try {
+            $sql= "SELECT * FROM `Hotels` WHERE hotelName=:hotel;";
+            $stmt= $conn-> prepare($sql);
+            $stmt-> bindParam("hotel", $_GET['hotel'], PDO::PARAM_STR);
+            $stmt-> execute();
+
+
+            $count= $stmt->rowCount();
+            $data= $stmt->fetch(PDO::FETCH_OBJ);
+            // get the image
+        } catch(PDOException $e) {
+            echo $e->getMessage();
+        }
+
+        if($data->pool ==0) {
+            $data->pool= "ΝΑΙ";
+        }
+
+        if($data->gym ==0) {
+            $data->gym= "ΝΑΙ";
+        }
+
+        if($data->cinema ==0) {
+            $data->cinema= "ΝΑΙ";
+        }
+
+        if($data->pool ==1) {
+            $data->pool= "ΟΧΙ";
+        }
+
+        if($data->gym ==1) {
+            $data->gym= "ΟΧΙ";
+        }
+
+        if($data->cinema ==1) {
+            $data->cinema= "ΟΧΙ";
+        }
+        if($count) {
+            echo '<section class="hotel-detail">';
+            echo '<img src="../media/Athens.jpg" tag="Athens" />';
+            echo '<p>Όνομα Ξεν/χειου: <b>'. $data->hotelName. '</b><br>Νομός:΅'. $data->district. '<br>Οδός: '. $data->address. '<br>Τηλέφωνο: '. $data->phone. '<br> ';
+            echo '<br>Αστέρια: <b>'. $data->rate. '/5 </b>';
+            echo '<br>Πισίνα:'. $data->pool;
+            echo '<br>Γυμναστήριο:'. $data->gym;
+            echo '<br>Σινεμά:'. $data->cinema;
+            echo '</p></section>';
+            echo '</section>';
+
+            echo '<section class="frame">
+                <div id="myMap" style="position: absolute; height: 20%; width: 20%; bottom: 35%;"></div>
+
+                <script>
+                    function initMap() {
+                    map = new google.maps.Map(document.getElementById("myMap"), {
+                        center: { lat:'. $data->latitude. ', lng:'.  $data->longitude. '},
+                        zoom: 5,
+                    });
+                    }
+                </script>
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeK1k5ofeAquX1Enuvp5feXkQxF1XKsQI&callback=initMap"
+                    async></script>
+                </section>';
+        }
     }
-    
     include("../imports/pageFooter.php");
 ?>

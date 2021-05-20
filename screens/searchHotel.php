@@ -45,7 +45,7 @@
                 echo "<ul class='hotel-cards'>";
 
                 while($record= $stmt-> fetch(PDO::FETCH_ASSOC)) {
-                    echo "<li><a href='../screens/hotelDetail.php?hotel={$record["hotelName"]}. '><img src='../media/Athens.jpg' tag='Athens' />";
+                    echo "<li><a href='../screens/hotelDetail.php?hotel={$record["hotelName"]} '><img src='../media/Athens.jpg' tag='Athens' />";
                     echo "<h3> " .$record["hotelName"]. "</h3></a>";
                     echo "<p> Νομός: " .$record["district"]. "</p>";
                     echo "<p> Τηλέφωνο: " .$record["phone"]. "</p></li>"; 
