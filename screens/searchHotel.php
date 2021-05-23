@@ -5,7 +5,7 @@
 ?>
 <section>
     <?php
-        if(isset($_GET["searchHotel"])) {
+        if(isset($_GET["searchHotel"]) || $_GET["dsc"]) {
             $res= formVal();
             if($res == TRUE) {
                 echo "Error";
@@ -19,10 +19,16 @@
     
             $startIndex= ($curPage - 1) * $recordsPerPage = 5;
 
-            $district= $_SESSION["district"];
-            $rooms= $_SESSION["rooms"];
-            $date= $_SESSION["date"];
-
+            if($_SESSION["district"]== NULL || $_SESSION["rooms"]== NULL || $_SESSION["date"]== NULL) {
+                $district= $_GET["dsc"];
+                $district= 10;
+                $date= date("d/m/Y");
+            }
+            else {
+                $district= $_SESSION["district"];
+                $rooms= $_SESSION["rooms"];
+                $date= $_SESSION["date"];
+            }
             try {
 
                 $sql= "SELECT COUNT(hotelID) as recCount FROM `Hotels`;";

@@ -1,6 +1,7 @@
 <?php
     include("../imports/pageHeader.php");
     include("../server/conn.inc.php");
+    
     if($_GET["hotel"]) {
         try {
             $sql= "SELECT * FROM `Hotels` WHERE hotelName=:hotel;";
