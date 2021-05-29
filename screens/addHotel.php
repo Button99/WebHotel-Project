@@ -75,7 +75,8 @@
         ?>
 
         <label for="upload">Φωτογραφίες:</label><br>
-        <input type="file" name="upload" id="upload" multiple/> </label for="desc" >Περιγραφή:</label><input type="text" name="desc" id="desc">Περιγραφή:</<br><br>
+        <input type="hidden" name="MAX_FILE_SIZE" value="1024" />
+        <input type="file" name="upload" id="upload" multiple/> </label for="desc" >Περιγραφή:</label><input type="text" name="desc" id="desc" /><br><br>
         <button type="submit" name="addHotel" id="addHotel">Προσθήκη</button>
     </form>
 </section>

@@ -30,10 +30,15 @@
         $hasGym= $_POST["hasGym"];
         $hasPool= $_POST["hasPool"];
         $hasCinema= $_POST["hasCinema"];
-        $$uploadFile= $_FILES["upload"]["tmp_name"];
-        $uploadName= $_FILES["upload"]["name"];
-        $uploadType= $_FILES["upload"]["type"];
+        $uploadFile= $_FILES['upload']['tmp_name'];
+        $uploadName= $_FILES['upload']['name'];
+        $uploadType= $_FILES['upload']['type'];
         $desc= $_POST["desc"];
+        
+        $ext= strtolower(substr($uploadName, -3));
+        $maxSize= 300;
+
+        $size= filesize($_FILES["upload"]["tmp_name"]);
 
         $flag= FALSE;
 
@@ -99,8 +104,8 @@
             $flag= TRUE;
         }
     
-        if($uploadType!= "image/jpeg") {
-            echo "Παρακαλώ προσθέστε φωτογραφίες!<br>";
+        if($ext!= "jpg" || $size>= $maxSize*1024) {
+            echo "Παρακαλώ προσθέστε φωτογραφίες jpeg με όριο 300kb<br>";
             $flag= TRUE;
         }
 
@@ -129,18 +134,14 @@
                 $stmt-> bindParam("usrId", $_SESSION["userId"], PDO::PARAM_STR);
     
                 $res= $stmt->execute();
-
-                $tempfile = fopen($uploadFile, 'rb');
-                $filedata = fread($tempfile, filesize($uploadFile));
-                $filedata = addslashes($filedata);
                 
                 $sql= "INSERT INTO `pictures` (name, mimetype, description, filedata) VALUES ($uploadFile, $uploadType, $desc, $filedata);";
                 $stmt= $conn->prepare($sql);
                 echo "works here 1";
                 $stmt-> execute();
 
-                $filename= "C:/Uploads/".com_create_guid()."jpg";
-                if(copy($files, $filename) && $res) {
+                $filename= guid().'.'.$ext;
+                if(copy($uploadFile, 'images/'. $filename) && $res) {
                     header("Location: ../screens/index.php");
                 }
                 else {
@@ -175,22 +176,23 @@
                 $stmt-> bindParam("usremail", $_SESSION["email"], PDO::PARAM_STR);
 
                 $stmt->execute();
-
-                $tempfile = fopen($uploadFile, 'rb');
-                $filedata = fread($tempfile, filesize($uploadFile));
-                $filedata = addslashes($filedata);
                 // Get the hotel id bef4 send
 
                 $sql= "SELECT `hotelID` FROM `Hotels` WHERE `Users_userID`=:usrId";
                 $stmt= $conn->prepare($sql);
-                $stmt-> bindParam("usrId", $_SESSION["userId"], PDO::PARAM_STR);
-                $res= $stmt->execute();
-
-                $sql= "INSERT INTO `pictures` (filenames, mimetype, descr, filedata, Hotel_hotelID) VALUES ($uploadFile, $uploadType, $desc, $filedata, $res);";
+                $stmt-> bindParam("usrId", $_SESSION["userId"]);
+                $stmt->execute();
+                $data= $stmt->fetch(PDO::FETCH_ASSOC);
+                print_r($data);
+                echo $data['hotelID'];
+                $sql= "INSERT INTO `pictures` (filenames, mimetype, descr, Hotel_hotelID) VALUES (:uploadF, :uploadT, :descr, :dat);";
                 $stmt= $conn->prepare($sql);
-                echo "works here";
+
+                $stmt-> bindParam("uploadF", $uploadName, PDO::PARAM_STR);
+                $stmt-> bindParam("uploadT", $uploadType, PDO::PARAM_STR);
+                $stmt-> bindParam("descr", $desc, PDO::PARAM_STR);
+                $stmt-> bindValue("dat", $data['hotelID'], PDO::PARAM_STR); // ERROR
                 $stmt-> execute();
-                echo "done";
                 header("Location: ../screens/index.php");
             } catch(PDOException $e) {
                 echo "Error! ". $e->getMessage();
