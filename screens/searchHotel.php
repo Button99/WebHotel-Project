@@ -46,15 +46,32 @@
                 $stmt-> bindParam("startIndex", $startIndex, PDO::PARAM_INT);
                 $stmt-> bindParam("recordsPerPage", $recordsPerPage, PDO::PARAM_INT);
                 $stmt-> execute();
+                // $sql="SELECT * FROM `Pictures` WHERE `Hotel_hotelID`=:recID;";
+                // $stmt= $conn-> prepare($sql);
+                // $stmt-> bindParam("recID", $record["hotelID"], PDO::PARAM_STR);
+                // $stmt-> execute();
+
+                // $data= $stmt-> fetch(PDO::FETCH_ASSOC);
+                // print_r($data);
+                // echo "works";
 
                 echo "<section class='hotel-pictures'>";
                 echo "<ul class='hotel-cards'>";
+                $record= $stmt-> fetch(PDO::FETCH_ASSOC);
+                $start= strlen($record["hotelID"]);
+                $i=1;
+                while($start > $i) {
+                    $sql="SELECT * FROM `Pictures` WHERE `Hotel_hotelID`=:recID;";
+                    $stmt= $conn-> prepare($sql);
+                    $stmt-> bindParam("recID", $record["hotelID"], PDO::PARAM_STR);
+                    $stmt-> execute();
+                    $data= $stmt-> fetch(PDO::FETCH_ASSOC);
 
-                while($record= $stmt-> fetch(PDO::FETCH_ASSOC)) {
-                    echo "<li><a href='../screens/hotelDetail.php?hotel={$record["hotelName"]} '><img src='../media/Athens.jpg' tag='Athens' />";
+                    echo "<li><a href='../screens/hotelDetail.php?hotel={$record["hotelName"]} '><img src='../media/{$data["filenames"]}' tag='Athens' />";
                     echo "<h3> " .$record["hotelName"]. "</h3></a>";
                     echo "<p> Νομός: " .$record["district"]. "</p>";
-                    echo "<p> Τηλέφωνο: " .$record["phone"]. "</p></li>"; 
+                    echo "<p> Τηλέφωνο: " .$record["phone"]. "</p></li>";
+                    $i++;
                 }
                 
                 echo "</ul></section>";
