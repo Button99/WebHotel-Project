@@ -6,8 +6,9 @@
         try {
             $sql= "SELECT * FROM `Hotels` WHERE `Users_userID`={$_SESSION['userId']};";
             $stmt= $conn->query($sql);
-            $res= $stmt-> execute();
-            if($res) {
+            $stmt-> execute();
+            $data= $stmt->fetch(PDO::FETCH_ASSOC);
+            if($data) {
                 return TRUE;
             }
 
@@ -114,7 +115,7 @@
         }
         $res= hasHotel();
 
-        if($res && 2 == 3) {
+        if($res) {
             try {
                 $sql="UPDATE `Hotels` SET `hotelName`=:hotelName, `district`=:district, `address`=:addr, `phone`=:phone, `numberOfRooms`=:numberOfRooms,
                 `longitude`:=longitude, `latitude`=:latitude, `rate`=:rate, `pool`=:hasPool, `gym`=:gym, `cinema`=:cinema, `Users_userID`=:usrId WHERE `Users_userID`=:usrId;";
@@ -135,18 +136,23 @@
     
                 $res= $stmt->execute();
                 
-                $sql= "INSERT INTO `pictures` (name, mimetype, description, filedata) VALUES ($uploadFile, $uploadType, $desc, $filedata);";
+
+                $sql= "SELECT `hotelID` FROM `Hotels` WHERE `Users_userID`=:usrId";
                 $stmt= $conn->prepare($sql);
-                echo "works here 1";
+                $stmt-> bindParam("usrId", $_SESSION["userId"]);
+                $stmt->execute();
+                $data= $stmt->fetch(PDO::FETCH_ASSOC);
+
+                $sql= "INSERT INTO `pictures` (filenames, mimetype, descr, Hotel_hotelID) VALUES (:uploadF, :uploadT, :descr, :dat);";
+                $stmt= $conn->prepare($sql);
+                $stmt-> bindParam("uploadF", $uploadName, PDO::PARAM_STR);
+                $stmt-> bindParam("uploadT", $uploadType, PDO::PARAM_STR);
+                $stmt-> bindParam("descr", $desc, PDO::PARAM_STR);
+                $stmt-> bindValue("dat", $data['hotelID'], PDO::PARAM_STR);
                 $stmt-> execute();
 
-                $filename= guid().'.'.$ext;
-                if(copy($uploadFile, 'images/'. $filename) && $res) {
-                    header("Location: ../screens/index.php");
-                }
-                else {
-                    echo "Πρόβλημα!";
-                }
+                header("Location: ../screens/index.php");
+
             } catch(PDOException $e) {
                 echo $e->getMessage();
             }
@@ -183,15 +189,14 @@
                 $stmt-> bindParam("usrId", $_SESSION["userId"]);
                 $stmt->execute();
                 $data= $stmt->fetch(PDO::FETCH_ASSOC);
-                print_r($data);
-                echo $data['hotelID'];
+
                 $sql= "INSERT INTO `pictures` (filenames, mimetype, descr, Hotel_hotelID) VALUES (:uploadF, :uploadT, :descr, :dat);";
                 $stmt= $conn->prepare($sql);
 
                 $stmt-> bindParam("uploadF", $uploadName, PDO::PARAM_STR);
                 $stmt-> bindParam("uploadT", $uploadType, PDO::PARAM_STR);
                 $stmt-> bindParam("descr", $desc, PDO::PARAM_STR);
-                $stmt-> bindValue("dat", $data['hotelID'], PDO::PARAM_STR); // ERROR
+                $stmt-> bindValue("dat", $data['hotelID'], PDO::PARAM_STR);
                 $stmt-> execute();
                 header("Location: ../screens/index.php");
             } catch(PDOException $e) {

@@ -8,7 +8,7 @@ function validateForm() {
     var illegalEmail= new RegExp("/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/");
     var illegalPassword= new RegExp("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$");
     var illegalChars= new RegExp("^[A-Za-z]\\w{5, 29}$");
-    
+
     console.log(illegalChars.test(username));
     console.log(illegalPassword.test(password));
     console.log(illegalEmail.test(email));
@@ -23,6 +23,10 @@ function validateForm() {
 
     if(illegalEmail.test(email)) {
         errorStr+= "Άκυρο email!\n";
+    }
+
+    if(grecaptcha.getResponse() == "") {
+        errorStr+= "Πατήστε το captcha!\n";
     }
 
     if(errorStr != "") {

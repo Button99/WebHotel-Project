@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
     if(!isset($_COOKIE["user"])) {
         $cookieName= "user";
@@ -6,7 +7,6 @@
     }
 ?>
 
-<!DOCTYPE html>
 <html>
     <head>
         <title>Web Hotels</title>
