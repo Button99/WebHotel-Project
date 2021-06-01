@@ -16,12 +16,11 @@
 
             $sql= "SELECT * FROM `Pictures` WHERE `Hotel_hotelID`=:hotID";
             $stmt= $conn-> prepare($sql);
-            $stmt-> bindParam("hotID", $data["hotelID"], PDO::PARAM_STR);
+            $stmt-> bindParam("hotID", $data->hotelID, PDO::PARAM_STR);
             $stmt-> execute();
 
             $count= $stmt->rowCount();
             $picture= $stmt->fetch(PDO::FETCH_OBJ);
-
         } catch(PDOException $e) {
             echo $e->getMessage();
         }
@@ -50,8 +49,8 @@
             $data->cinema= "ΟΧΙ";
         }
         if($count) {
-            echo '<section class="hotel-detail">';
-            echo "<img src='../media/{$picture["filename"]}' tag='{$picture{"descr"]}' />"; //ERROROR
+            echo "<section class='hotel-detail'>
+                <img src='../media/$picture->filenames' tag='$picture->descr' />"; //ERROROR
             echo '<p>Όνομα Ξεν/χειου: <b>'. $data->hotelName. '</b><br>Νομός:΅'. $data->district. '<br>Οδός: '. $data->address. '<br>Τηλέφωνο: '. $data->phone. '<br> ';
             echo '<br>Αστέρια: <b>'. $data->rate. '/5 </b>';
             echo '<br>Πισίνα:'. $data->pool;
@@ -73,6 +72,7 @@
                 </script>
                 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeK1k5ofeAquX1Enuvp5feXkQxF1XKsQI&callback=initMap"
                     async></script>
+
                 </section>';
         }
     }
