@@ -22,6 +22,40 @@
         ?>
 
         <link rel="preconnect" href="https://fonts.gstatic.com">
+        <script type="text/javascript">
+
+        function initAJAX() {
+            if (window.XMLHttpRequest) {   // για σύγχρονους nrowsers
+                return xmlhttp=new XMLHttpRequest();
+            } else if (window.ActiveXObject) {   //μόνο για IE5, IE6
+                return xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+            } else {   //δεν υποστηρίζονται AJAX κλήσεις
+                alert("Your browser does not support AJAX calls!");
+                return false;
+            }
+        }
+        function myAJAXCall(categoryID) {
+
+            var ajaxObject=initAJAX();
+
+            if (ajaxObject) {
+
+                var url= '../screens/error.php';
+                ajaxObject.open("GET",url,true);
+                ajaxObject.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                ajaxObject.onreadystatechange=function() {
+
+                    if(ajaxObject.readyState==4 && ajaxObject.status==200) {
+                        document.getElementById("errorMsg").innerHTML= ajaxObject.responseText;       
+
+                    } else { 
+                        // κάτι δεν πήγε καλά με την απάντηση του server
+                        document.getElementById("errorMsg").innerHTML= "Πρόβλημα στην AJAX κλίση!";
+                    }  
+                } // end of callback
+            } //if
+        } //function
+        </script>
     </head>
         <script src="../clientSideVal/formSearchValidation.js"></script> 
     <body>
@@ -40,6 +74,9 @@
 
                     }
                     else {
+                        echo '<form method="get" class="change-mode" action="../cookies/saveMode.php">
+                                <input type="submit" name="btn" value="Αλλαγή Θέματος" />
+                              </form>';
                         echo '<a class="btn" href="../screens/logout.php" name="login-btn"><button>Αποσύνδεση</button></a>';
                         echo '<a class="btn" href="../screens/addHotel.php"><button>Προσθήκη Ξενοδοχείου/Επεξεργασία</button></a>';
                     }

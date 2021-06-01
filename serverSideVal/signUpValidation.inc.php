@@ -30,6 +30,21 @@
         try {
             $hashedPsw= openssl_digest($psw, "sha512");
             $vkey= md5(time().$usr);
+
+            $sql= "SELECT `username`, `email` FROM `Users` WHERE `username`=:username OR `email`=:email;";
+            $stmt= $conn->prepare($sql);
+            $stmt-> bindParam("username", $usr, PDO::PARAM_STR);
+            $stmt-> bindParam("email", $email, PDO::PARAM_STR);
+            $stmt->execute();
+            $count= $stmt->rowCount();
+            $data= $stmt->fetch(PDO::FETCH_OBJ);
+            
+            if($data->username == $usr || $data->email == $email) {
+                echo "Υπάρχει ήδη λογαριασμός!";
+                echo '<button onclick="history.go(-1);"">Επιστροφή</button>';
+                exit();
+            }
+            
             $sql= "INSERT INTO `Users` (`username`, `password`, `email`, `vkey`) VALUES
                 ('$usr', '$hashedPsw', '$email', '$vkey');";
 
