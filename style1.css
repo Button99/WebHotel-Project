@@ -155,7 +155,6 @@ footer p {
  .hotel-pictures {
     margin: 2rem;
     width: 90%;
-
 } 
 
 .hotel-cards li{
@@ -166,6 +165,7 @@ footer p {
     border-color: #E6E2DD;
     display: flexbox;
     list-style-type: none;
+    padding-bottom: 2rem;
 }
 .hotel-cards li h3, p {
     margin: 0.8rem; 
@@ -193,4 +193,72 @@ footer p {
 
 .frame {
     height: 100%;
+}
+
+@media(max-width: 768px) {
+    .change-mode {
+        float: right;
+        align-content: middle;
+        text-decoration-line: none;
+        width: max-content;
+    }
+    
+    .change-mode input {
+        background-color: #E6E2DD;
+        margin: 0.4rem; 
+        padding: 0.4rem;
+        text-align: center;
+        align-content: center;
+        display: block;
+    }
+    
+    .change-mode input:hover {
+        transition: 0.5s;
+        background: #808080;
+    }
+
+    .btn {
+        float: right;
+        align-content: middle;
+        text-decoration-line: none;
+    }
+    
+    .header button{
+        background-color: #E6E2DD;
+        margin: 0.4rem; 
+        padding: 0.4rem;
+        text-align: center;
+        align-content: center;
+        display: block;
+    }
+    
+    .header button:hover {
+        transition: 0.5s;
+        background: #808080;
+    }
+
+    .finder {
+        margin: 0.2rem;
+        padding: 0.1rem;
+        border-bottom-style: solid;
+        border-color: #E6E2DD;
+    }
+
+    .town-pictures {
+        margin: 0.2rem;
+        width: 90%;
+    }
+    
+    .town-cards li{
+        display: inline-block;
+        width: 70%;    
+        height: 80vh;
+        margin: 3rem;
+    }
+    
+    
+    .town-cards img {
+        width: 70%;
+        height: 50vh;
+    }
 }

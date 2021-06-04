@@ -65,12 +65,13 @@
                 <?php
                     session_start();
                     if(empty($_SESSION["userId"])) {
-                        echo '<a class="btn" href="../screens/logIn.php" name="login-btn"><button>Σύνδεση</button></a>';
-                        echo '<a class="btn" href="../screens/signUp.php"><button>Εγγραφή</button></a>';
-
                         echo '<form method="get" class="change-mode" action="../cookies/saveMode.php">
                                 <input type="submit" name="btn" value="Αλλαγή Θέματος" />
                               </form>';
+                        echo '<a class="btn" href="../screens/logIn.php" name="login-btn"><button>Σύνδεση</button></a>';
+                        echo '<a class="btn" href="../screens/signUp.php"><button>Εγγραφή</button></a>';
+
+
 
                     }
                     else {
@@ -104,6 +105,8 @@
                 ?>
                 <label for="room">Δωμάτια:</label>
                 <input type="number" name="room" id="room" min="1" max="100" value="1"/>
+                <label for="has-pool">Πισίνα:</label>
+                <input type="checkbox" name="has-pool" id="has-pool" value="0"/>
                 <label for="date">Ημερομηνία:</label>
                 <input type="date" name="date" id="date"/>
                 <button type="submit" name="searchHotel" id="searchHotel">Αναζήτηση</button>

@@ -20,7 +20,6 @@
         exit();
     }
 
-
     // if connection with the server is established then access to the sql query...
     try {
         $hashedPsw= openssl_digest($psw,"sha512");
@@ -37,7 +36,6 @@
         if($data->isValid== 0) {
             $errormsg= "Πρέπει πρώτα να γίνει επιβεβαίωση!";
             header("Location: ../screens/error.php");
-
             exit();
         }
 

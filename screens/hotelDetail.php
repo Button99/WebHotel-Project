@@ -12,8 +12,6 @@
             $count= $stmt->rowCount();
             $data= $stmt->fetch(PDO::FETCH_OBJ);
 
-            // get the image
-
             $sql= "SELECT * FROM `Pictures` WHERE `Hotel_hotelID`=:hotID";
             $stmt= $conn-> prepare($sql);
             $stmt-> bindParam("hotID", $data->hotelID, PDO::PARAM_STR);
@@ -50,7 +48,7 @@
         }
         if($count) {
             echo "<section class='hotel-detail'>
-                <img src='../media/$picture->filenames' tag='$picture->descr' />"; //ERROROR
+                <img src='../media/$picture->filenames' tag='$picture->descr' />"; 
             echo '<p>Όνομα Ξεν/χειου: <b>'. $data->hotelName. '</b><br>Νομός:΅'. $data->district. '<br>Οδός: '. $data->address. '<br>Τηλέφωνο: '. $data->phone. '<br> ';
             echo '<br>Αστέρια: <b>'. $data->rate. '/5 </b>';
             echo '<br>Πισίνα:'. $data->pool;

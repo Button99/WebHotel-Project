@@ -3,6 +3,7 @@
     function formVal() {
         $district= $_GET["dsc"];
         $rooms= $_GET["room"];
+        $hasPool= $_GET["has-pool"];
         $date= $_GET["date"];
         $flag= FALSE;
 
@@ -33,6 +34,7 @@
 
         $_SESSION["district"]= $district;
         $_SESSION["rooms"]= $rooms;
+        $_SESSION["has-pool"]= $hasPool;
         $_SESSION["date"]= $date;
         return $flag;
     }

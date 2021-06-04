@@ -36,6 +36,7 @@
             $stmt-> bindParam("username", $usr, PDO::PARAM_STR);
             $stmt-> bindParam("email", $email, PDO::PARAM_STR);
             $stmt->execute();
+
             $count= $stmt->rowCount();
             $data= $stmt->fetch(PDO::FETCH_OBJ);
             
@@ -46,18 +47,26 @@
             }
             
             $sql= "INSERT INTO `Users` (`username`, `password`, `email`, `vkey`) VALUES
-                ('$usr', '$hashedPsw', '$email', '$vkey');";
+                (:usr, :hashedPsw, :email, :vkey);";
+            
+            $stmt= $conn-> prepare($sql);
+            $stmt-> bindParam("usr", $usr, PDO::PARAM_STR);
+            $stmt-> bindParam("hashedPsw", $hashedPsw, PDO::PARAM_STR);
+            $stmt-> bindParam("email", $email, PDO::PARAM_STR);
+            $stmt-> bindParam("vkey", $vkey, PDO::PARAM_STR);
 
-            $conn ->exec($sql);
-            // Generate vkey
+            $stmt-> execute();
+
             $res= sendMail($email, $vkey);
             if($res) {
                 header("Location: ../screens/logIn.php");
             }
             else {
                 echo "Πρόβλημα με τον σέρβερ<br>Προσπαθήστε ξανά";
-                $sql= "DELETE FROM `Users` WHERE `username`=$usr";
-                $conn->exec($sql);
+                $sql= "DELETE FROM `Users` WHERE `username`=:usr";
+                $stmt-> prepare($sql);
+                $stmt-> bindParam("usr", $usr, PDO::PARAM_STR);
+                $stmt->execute();
             }
         } catch(PDOException $e) {
             echo $e-> getMessage();

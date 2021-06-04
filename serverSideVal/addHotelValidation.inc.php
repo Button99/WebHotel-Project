@@ -143,6 +143,12 @@
                 $stmt->execute();
                 $data= $stmt->fetch(PDO::FETCH_ASSOC);
 
+                move_uploaded_file($FILE["upload"]["tmp_name"], "../media/");
+                $sql="DELETE FROM `pictures` WHERE `Hotel_hotelID`=:hotelID";
+                $stmt= $conn->prepare($sql);
+                $stmt-> bindParam("hotelID", $data["hotelID"], PDO::PARAM_STR);
+                $stmt->execute();
+
                 $sql= "INSERT INTO `pictures` (filenames, mimetype, descr, Hotel_hotelID) VALUES (:uploadF, :uploadT, :descr, :dat);";
                 $stmt= $conn->prepare($sql);
                 $stmt-> bindParam("uploadF", $uploadName, PDO::PARAM_STR);
@@ -182,13 +188,14 @@
                 $stmt-> bindParam("usremail", $_SESSION["email"], PDO::PARAM_STR);
 
                 $stmt->execute();
-                // Get the hotel id bef4 send
 
                 $sql= "SELECT `hotelID` FROM `Hotels` WHERE `Users_userID`=:usrId";
                 $stmt= $conn->prepare($sql);
                 $stmt-> bindParam("usrId", $_SESSION["userId"]);
                 $stmt->execute();
                 $data= $stmt->fetch(PDO::FETCH_ASSOC);
+
+                move_uploaded_file($FILE["upload"]["tmp_name"], "../media/");
 
                 $sql= "INSERT INTO `pictures` (filenames, mimetype, descr, Hotel_hotelID) VALUES (:uploadF, :uploadT, :descr, :dat);";
                 $stmt= $conn->prepare($sql);
